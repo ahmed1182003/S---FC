@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://pfst.cf2.poecdn.net/base/image/106a93ccbf601dde047a99c7fdae1fc1e3ce675a7c40bd448939723421c7fbc1?w=1024&h=768&pmaid=244219882') no-repeat center center fixed; 
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        label {
+            margin-top: 15px;
+            display: block;
+            font-size: 1.2em;
+            text-align: left;
+            width: 100%;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            outline: none;
+            font-size: 1em;
+            transition: 0.3s;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        input:focus {
+            border-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: 0.3s;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        button:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+            z-index: 0;
+        }
+        button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 6px solid #6a11cb;
+            border-radius: 8px;
+            width: 100%;
+            text-align: left;
+        }
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px; 
+            height: 40px; 
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em; 
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle-btn:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+        
+        body.dark {
+            background: #2c2c34;
+            color: #eaeaea;
+        }
+        .container.dark {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .result.dark {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-left: 6px solid #6a11cb;
+        }
+        .toggle-btn.dark {
+            background-color: #444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<button class="toggle-btn" id="toggleBtn" onclick="toggleTheme()">🌙</button>
+
+<div class="container" id="container">
+    <h1>Password Generator</h1>
+    <label for="user_info">Your Information (e.g., Birthdate):</label>
+    <input type="text" id="user_info" placeholder="Enter your information here">
+
+    <label for="password_length">Password Length:</label>
+    <input type="number" id="password_length" placeholder="e.g., 12">
+
+    <label for="num_digits">Number of Digits:</label>
+    <input type="number" id="num_digits" placeholder="e.g., 3">
+
+    <label for="num_passwords">Number of Passwords to Generate:</label>
+    <input type="number" id="num_passwords" placeholder="e.g., 5">
+
+    <button onclick="generatePasswords()"><span>Generate Passwords</span></button>
+
+    <div id="result" class="result" style="display:none;"></div>
+</div>
+
+<script>
+    function generatePasswords() {
+        const userInfo = document.getElementById('user_info').value;
+        const length = parseInt(document.getElementById('password_length').value);
+        const numDigits = parseInt(document.getElementById('num_digits').value);
+        const numPasswords = parseInt(document.getElementById('num_passwords').value);
+
+        const passwords = [];
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
+        const allChars = lowercase + uppercase + numbers + specialChars;
+
+        for (let i = 0; i < numPasswords; i++) {
+            let passwordChars = '';
+
+            
+            for (let j = 0; j < length - numDigits - 1; j++) {
+                passwordChars += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
+            }
+
+            
+            for (let j = 0; j < numDigits; j++) {
+                passwordChars += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            }
+
+            
+            passwordChars += specialChars.charAt(Math.floor(Math.random() * specialChars.length));
+
+            
+            const combinedInfo = userInfo + Array.from({ length: length - passwordChars.length }).map(() => allChars.charAt(Math.floor(Math.random() * allChars.length))).join('');
+            passwordChars += combinedInfo;
+
+            
+            passwords.push(Array.from(passwordChars).sort(() => Math.random() - 0.5).join(''));
+        }
+
+        document.getElementById('result').innerText = 'Generated Passwords:\n' + passwords.join('\n');
+        document.getElementById('result').style.display = 'block';
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const container = document.getElementById('container');
+        const result = document.getElementById('result');
+        const toggleBtn = document.getElementById('toggleBtn');
+
+        body.classList.toggle('dark');
+        container.classList.toggle('dark');
+        result.classList.toggle('dark');
+        toggleBtn.classList.toggle('dark');
+
+        toggleBtn.innerText = body.classList.contains('dark') ? '☀️' : '🌙';
+    }
+</script>
+
+</body>
+</html>

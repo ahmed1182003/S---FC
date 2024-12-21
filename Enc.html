@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Encryption & Dicryption </title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="sidebar">
+            <h2>Choose</h2>
+            <button onclick="showPage('encryptMessages')">Encrypt Messages</button>
+            <button onclick="showPage('decryptMessages')">Decrypt Messages</button>
+            <button onclick="showPage('encryptImages')">Encrypt Images</button>
+            <button onclick="showPage('decryptImages')">Decrypt Images</button>
+        </div>
+        <div class="content">
+            <h1>Welcome to the Encryption Site</h1>
+            <p>Please choose an option from the left menu.</p>
+
+            <div id="encryptMessages" class="hidden">
+                <h2>Encrypt Messages</h2>
+                <textarea id="message" placeholder="Type your message here..."></textarea>
+                <button onclick="encryptMessage()">Encrypt Message</button>
+                <h3>Encrypted Message:</h3>
+                <input type="text" id="encryptedMessage" readonly>
+            </div>
+
+            <div id="decryptMessages" class="hidden">
+                <h2>Decrypt Messages</h2>
+                <input type="text" id="messageToDecrypt" placeholder="Enter encrypted message here...">
+                <button onclick="decryptMessage()">Decrypt Message</button>
+                <h3>Decrypted Message:</h3>
+                <input type="text" id="decryptedMessage" readonly>
+            </div>
+
+            <div id="encryptImages" class="hidden">
+                <h2>Encrypt Images</h2>
+                <label class="custom-file-upload">
+                    Choose file
+                    <input type="file" id="imageInput" accept="image/*">
+                </label>
+                <button onclick="encryptImage()">Encrypt Image</button>
+                <h3>Encrypted Image:</h3>
+                <input type="text" id="encryptedImage" readonly>
+                <img id="imagePreview" style="display:none; margin-top: 20px; max-width: 300px;">
+            </div>
+
+            <div id="decryptImages" class="hidden">
+                <h2>Decrypt Images</h2>
+                <input type="text" id="imageToDecrypt" placeholder="Enter Base64 string here...">
+                <button onclick="decryptImage()">Decrypt Image</button>
+                <h3>Decrypted Image:</h3>
+                <img id="decryptedImagePreview" style="display:none; margin-top: 20px; max-width: 300px;">
+            </div>
+        </div>
+        <div class="toggle-container">
+            <button id="toggleTheme" onclick="toggleTheme()">🌙</button> 
+        </div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            document.getElementById("encryptMessages").classList.add("hidden");
+            document.getElementById("decryptMessages").classList.add("hidden");
+            document.getElementById("encryptImages").classList.add("hidden");
+            document.getElementById("decryptImages").classList.add("hidden");
+
+            document.getElementById(page).classList.remove("hidden");
+        }
+
+        function encryptMessage() {
+            const message = document.getElementById("message").value;
+            const encrypted = btoa(message); 
+            document.getElementById("encryptedMessage").value = encrypted;
+        }
+
+        function decryptMessage() {
+            const encryptedMessage = document.getElementById("messageToDecrypt").value;
+            const decrypted = atob(encryptedMessage); 
+            document.getElementById("decryptedMessage").value = decrypted;
+        }
+
+        function encryptImage() {
+            const fileInput = document.getElementById("imageInput");
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result.split(',')[1]; 
+                document.getElementById("encryptedImage").value = base64String;
+                document.getElementById("imagePreview").src = event.target.result; 
+                document.getElementById("imagePreview").style.display = "block"; 
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function decryptImage() {
+            const base64String = document.getElementById("imageToDecrypt").value;
+            document.getElementById("decryptedImagePreview").src = "data:image/png;base64," + base64String; 
+            document.getElementById("decryptedImagePreview").style.display = "block"; 
+        }
+        function toggleTheme() {
+    const body = document.body;
+    const toggleButton = document.getElementById("toggleTheme");
+    body.classList.toggle("light-theme"); 
+    if (body.classList.contains("light-theme")) {
+        toggleButton.innerHTML = "🌞"; 
+    } else {
+        toggleButton.innerHTML = "🌙"; 
+    }
+}
+    </script>
+</body>
+</html>

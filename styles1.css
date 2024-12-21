@@ -1,0 +1,218 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+.toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#toggleTheme {
+    background: rgba(255, 255, 255, 0.8); 
+    border: none;
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    font-size: 18px; 
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+    transition: background 0.3s, transform 0.2s;
+}
+
+#toggleTheme:hover {
+    background: rgba(21, 21, 20, 0.9); 
+    transform: scale(1.1); 
+}
+.light-theme {
+    background: #020202; 
+    color: #fcfbfb; 
+    .sidebar {
+    background: #0c0c0c; 
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar h2 {
+    margin: 0 0 20px 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.sidebar button {
+    background: #eeecf0;
+    border: none;
+    border-radius: 5px;
+    color: rgb(7, 7, 7);
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 1em;
+}
+
+.sidebar button:hover {
+    background: #47434a;
+    transform: scale(1.05);
+}
+.content {
+    background: #555252; 
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+}
+}
+
+
+.main-container {
+    display: flex;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.sidebar {
+    background: url('https://wallpapers.com/images/high/do-something-hacking-android-background-io5pigwnxg97lqlh.webp') no-repeat center center; /* استبدل برابط الصورة الخاص بك */
+    background-size: cover; 
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.sidebar h2 {
+    margin: 0 0 20px 0;
+    font-size: 4,5 em;
+    text-align: center;
+    color: ghostwhite;
+    box-shadow: 0 4px 15px rgb(19, 131, 196);
+    background: linear-gradient(135deg, #1494f6, #0875b5);
+    border-radius: 5px;
+}
+.sidebar h2:hover{
+    background: linear-gradient(135deg, #4dccef, #4c9de9); 
+    transform: scale(1.05); 
+}
+
+.sidebar button {
+    background: linear-gradient(135deg, #1494f6, #0875b5); 
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s; 
+    font-size: 1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+.sidebar button:hover {
+    background: linear-gradient(135deg, #4dccef, #4c9de9); 
+    transform: scale(1.05); 
+}
+
+.content button {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s; 
+    font-size: 1em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+.content button:hover {
+    background: linear-gradient(135deg, #2980b9, #1f639e); 
+    transform: scale(1.05); 
+}
+
+.content {
+    flex-grow: 1;
+    padding: 40px;
+    background: url('https://pfst.cf2.poecdn.net/base/image/f573fd641d3a3ea0a84e64ed396d59a4ee555ac81a9a5e26c41bdfe33d3eea6a?w=1024&h=768&pmaid=244574181') no-repeat center center; /* Update with your image path */
+    background-size: cover; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff; 
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgb(10, 10, 10);
+}
+
+
+textarea, input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 15px; 
+    border: 2px solid #3498db; 
+    background: rgba(255, 255, 255, 0.95); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s; 
+}
+
+textarea:focus, input[type="text"]:focus {
+    border-color: #2980b9; 
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.5); 
+    outline: none; 
+}
+
+
+input[type="file"] {
+    display: none; 
+}
+
+.custom-file-upload {
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin-top: 10px;
+    border: 2px dashed #3498db; 
+    border-radius: 15px; 
+    background: rgba(255, 255, 255, 0.95); 
+    color: #ed2121; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; 
+}
+
+.custom-file-upload:hover {
+    border-color: #2980b9; 
+    background: rgba(52, 152, 219, 0.1); 
+}
+
+.custom-file-upload:active {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+.hidden {
+    display: none;
+}
+
+img {
+    border-radius: 10px;
+    margin-top: 20px;
+    max-width: 100%;
+}
